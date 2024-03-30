@@ -223,7 +223,7 @@ async function _injectContent(message, type, html) {
     switch (type) {     
         case ROLL_TYPE.DAMAGE:
             // Handle damage enrichers
-            if (!message.flags.dnd5e?.roll.itemId) {
+            if (message.flags.dnd5e?.roll.itemId) {
                 const enricher = html.find('.dice-roll');
                 
                 html.parent().find('.flavor-text').text('');
@@ -323,21 +323,23 @@ async function _injectContent(message, type, html) {
                 await _injectAttackRoll(message, actions);
             }
             
-            if (message.flags[MODULE_SHORT].manualDamage || message.flags[MODULE_SHORT].renderDamage) {                
-                actions.find(`[data-action='${ROLL_TYPE.DAMAGE}']`).remove();
-                actions.find(`[data-action='${ROLL_TYPE.VERSATILE}']`).remove();
-            }
+            if (!message.flags[MODULE_SHORT].supressDamageButton) {
+                if (message.flags[MODULE_SHORT].manualDamage || message.flags[MODULE_SHORT].renderDamage) {                
+                    actions.find(`[data-action='${ROLL_TYPE.DAMAGE}']`).remove();
+                    actions.find(`[data-action='${ROLL_TYPE.VERSATILE}']`).remove();
+                }
 
-            if (message.flags[MODULE_SHORT].manualDamage) {
-                await _injectDamageButton(message, actions);
-            }
+                if (message.flags[MODULE_SHORT].manualDamage) {
+                    await _injectDamageButton(message, actions);
+                }
 
-            if (message.flags[MODULE_SHORT].renderDamage) {
-                await _injectDamageRoll(message, actions);
-            }
+                if (message.flags[MODULE_SHORT].renderDamage) {
+                    await _injectDamageRoll(message, actions);
+                }            
 
-            if (SettingsUtility.getSettingValue(SETTING_NAMES.DAMAGE_BUTTONS_ENABLED)) {                
-                await _injectApplyDamageButtons(message, html);
+                if (SettingsUtility.getSettingValue(SETTING_NAMES.DAMAGE_BUTTONS_ENABLED)) {                
+                    await _injectApplyDamageButtons(message, html);
+                }
             }
 
             if (message.flags[MODULE_SHORT].renderToolCheck) {

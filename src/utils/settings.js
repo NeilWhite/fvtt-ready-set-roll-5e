@@ -25,7 +25,8 @@ export const SETTING_NAMES = {
     APPLY_DAMAGE_TO: "applyDamageTo",
     ALWAYS_ROLL_MULTIROLL: "alwaysRollMulti",
     CONFIRM_RETRO_ADV: "confirmRetroAdv",
-    CONFIRM_RETRO_CRIT: "confirmRetroCrit"
+    CONFIRM_RETRO_CRIT: "confirmRetroCrit",
+    DISABLE_DAMAGE_ROLL: "disableDamageRoll"
 }
 
 /**
@@ -113,6 +114,7 @@ export class SettingsUtility {
             { name: SETTING_NAMES.ALWAYS_SHOW_BUTTONS, default: true },
             { name: SETTING_NAMES.CONFIRM_RETRO_ADV, default: false },
             { name: SETTING_NAMES.CONFIRM_RETRO_CRIT, default: false },
+            { name: SETTING_NAMES.DISABLE_DAMAGE_ROLL, default: false }
         ]        
 
         chatCardOptions.forEach(option => {

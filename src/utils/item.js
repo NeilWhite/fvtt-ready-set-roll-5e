@@ -63,7 +63,9 @@ export class ItemUtility {
         }
         
         const manualDamageMode = SettingsUtility.getSettingValue(SETTING_NAMES.MANUAL_DAMAGE_MODE);
-        card.flags[MODULE_SHORT].manualDamage = item.hasDamage && (manualDamageMode === 2 || (manualDamageMode === 1 && item.hasAttack));
+        const suppressDamageRoll = SettingsUtility.getSettingValue(SETTING_NAMES.DISABLE_DAMAGE_ROLL);
+        card.flags[MODULE_SHORT].manualDamage = item.hasDamage && (manualDamageMode === 2 || (manualDamageMode === 1 && item.hasAttack) || suppressDamageRoll);
+        card.flags[MODULE_SHORT].supressDamageButton = suppressDamageRoll;
 
         if (!card.flags[MODULE_SHORT].manualDamage) {
             card.flags[MODULE_SHORT].renderDamage = true;            
